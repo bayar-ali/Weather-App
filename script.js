@@ -8,13 +8,12 @@ $(document).ready(function () {
     function citySearch(city) {
 
 
-        //my api
+//my api
         let key = "302b9140c604266added2319618b8cb6";
         // This URL grabs the current weather
         let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + key;
         //This URL grabs the 5 day forecast 
         let forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + key;
-
 
         $.ajax({
             url: queryURL,
@@ -31,7 +30,7 @@ $(document).ready(function () {
             let currentTemp = $("<p>").text(" Temperature " + data.main.temp + "° F");
             let currentHumid = $("<p>").text("Humidity: " + data.main.humidity + "%");
             let currentWindSpeed = $("<p>").text("Wind Speed : " + data.wind.speed + " MPH");
-            let icon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png");
+             let icon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png");
 
             $("#current").empty();
             $("#current").append(currentCity, pCurrentDay, currentTemp, currentHumid, currentWindSpeed, icon);
@@ -39,6 +38,30 @@ $(document).ready(function () {
             // Grab coordinates 
             let lati = data.coord.lat;
             let long = data.coord.lon;
+
+            // This API pulls coordinates and will return the UV index 
+            $.ajax({
+                url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + lati + "&" + "lon=" + long + "&appid=" + key,
+                method: "GET"
+            }).then(function (data) {
+               
+                let UV = data.current.uvi
+                let currentUV = $("<p>").text("UV Index: " + UV);
+                //dynamic colored UV icon
+
+                if (UV < 5) {
+                    // green 
+                    currentUV.addClass("badge badge-success");
+                } else if (UV > 7) {
+                    // red
+                    currentUV.addClass("badge badge-danger");
+                } else {
+                    // yellow 
+                    currentUV.addClass("badge badge-warning")
+                }
+                //Display UV index 
+                $("#current").append(currentUV);
+            });
         });
 
         $.ajax({
@@ -46,7 +69,6 @@ $(document).ready(function () {
             method: "GET"
         }).then(function (data) {
 
-            //console.log(data);
             // Display the forecast, 
             for (let i = 5, j = 0; i < 40; i += 8, j++) {
                 let classes = [".one", ".two", ".three", ".four", ".five"];
@@ -119,7 +141,6 @@ $(document).ready(function () {
             $("#history").append(li);
         }
 
-
     };
     // store the city in localstorage
     function storeHistory() {
@@ -128,21 +149,16 @@ $(document).ready(function () {
     };
 
     function retrieveHistory() {
-
         //pull saved cities
         let storedCities = JSON.parse(localStorage.getItem("cities"));
         if (storedCities !== null) {
             // If array is not empty, replace with the new array
             historyArray = storedCities;
-
-
-            let lastArrayItem = historyArray[historyArray.length - 1];
-            console.log(lastArrayItem);
-
+            let lastArrayItem = historyArray[historyArray.length -1];
             renderHistory(lastArrayItem);
         }
 
-
+        
     };
 
     $(document).on("click", ".clickable", function () {
@@ -150,7 +166,7 @@ $(document).ready(function () {
         citySearch(city);
     });
 
-
+  
     $("#button").on("click", function () {
         localStorage.clear();
         location.reload();
