@@ -1,0 +1,21 @@
+
+.weatherDashboard {
+    font-family: 'Cinzel Decorative', cursive;
+}
+
+header {
+background-color: rgb(235, 225, 225);
+}
+body {
+     background-color: rgb(235, 225, 225);
+height: 100vh;
+}
+.card-body {
+
+    text-align: center;
+}
+
+.next5days {
+  
+  background-color: rgb(221, 204, 204);
+}
