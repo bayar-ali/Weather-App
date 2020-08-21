@@ -1,5 +1,21 @@
 
-https://bayar-ali.github.io/Weather-Dashboard/.
+Try It Yourself https://bayar-ali.github.io/Weather-Dashboard/.
 
 # Weather-App
-Your challenge is to build a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS. Use the OpenWeather API to retrieve weather data for cities. The documentation includes a section called "How to start" that will provide basic setup and usage instructions. Use localStorage to store any persistent data.
+
+#Description
+
+This Is weather app that Use the OpenWeather API to retrieve weather data for Country's/cities
+Use localStorage to store any persistent data. This App let you search for weather and save Your recent searches
+unless you clear
+
+#Technologies Used:
+
+Javascript
+Jquery
+Ajax 
+
+Installation
+
+No installation is necessary for this project
+
